@@ -43,12 +43,28 @@ Route::get('/panier/ajouter/{id}', [CartController::class, 'add'])->name('cart.a
 Route::get('/panier/retirer/{id}', [CartController::class, 'remove'])->name('cart.remove');
 Route::get('/panier/vider', [CartController::class, 'clear'])->name('cart.clear');
 
+// ===== PANIER (protégé) =====
+Route::middleware(['auth'])->group(function () {
+    Route::get('/panier', [CartController::class, 'index'])->name('cart.index');
+    Route::get('/panier/ajouter/{id}', [CartController::class, 'add'])->name('cart.add');
+    Route::get('/panier/retirer/{id}', [CartController::class, 'remove'])->name('cart.remove');
+    Route::get('/panier/vider', [CartController::class, 'clear'])->name('cart.clear');
+});
+
 // ===== COMMANDES =====
 Route::get('/commande', [OrderController::class, 'checkout'])->name('orders.checkout');
 Route::post('/commande', [OrderController::class, 'store'])->name('orders.store');
 Route::get('/commande/confirmation/{id}', [OrderController::class, 'confirmation'])->name('orders.confirmation');
 Route::get('/mes-commandes', [OrderController::class, 'myOrders'])->name('orders.my')->middleware('auth');
 
+
+// ===== COMMANDES (protégé) =====
+Route::middleware(['auth'])->group(function () {
+    Route::get('/commande', [OrderController::class, 'checkout'])->name('orders.checkout');
+    Route::post('/commande', [OrderController::class, 'store'])->name('orders.store');
+    Route::get('/commande/confirmation/{id}', [OrderController::class, 'confirmation'])->name('orders.confirmation');
+    Route::get('/mes-commandes', [OrderController::class, 'myOrders'])->name('orders.my');
+});
 // ===== AUTHENTIFICATION =====
 Route::get('/inscription', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/inscription', [AuthController::class, 'register']);

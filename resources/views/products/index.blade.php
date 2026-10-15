@@ -122,10 +122,10 @@
         @endauth
 
         {{-- Panier en évidence à droite --}}
-        <a href="{{ route('cart.index') }}" class="cart-btn">
-            🛒 Panier
-            <span class="cart-count">{{ count(session('cart', [])) }}</span>
-        </a>
+       <a href="{{ route('cart.index') }}" class="cart-btn">
+    🛒 Panier
+    <span class="cart-count">{{ count(session('cart', [])) }}</span>
+</a>
     </div>
 </header>
 

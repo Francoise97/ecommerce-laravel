@@ -48,7 +48,6 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
-
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
@@ -57,7 +56,8 @@ class AuthController extends Controller
                 return redirect()->route('admin.dashboard')->with('success', 'Bienvenue Admin !');
             }
 
-            return redirect('/')->with('success', 'Connexion réussie !');
+            // Rediriger vers la page précédente ou l'accueil
+            return redirect()->intended('/')->with('success', 'Connexion réussie !');
         }
 
         return back()->withErrors([
