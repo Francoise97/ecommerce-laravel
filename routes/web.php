@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\CouponController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Product;
 use App\Http\Controllers\CartController;
@@ -49,6 +49,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/panier/ajouter/{id}', [CartController::class, 'add'])->name('cart.add');
     Route::get('/panier/retirer/{id}', [CartController::class, 'remove'])->name('cart.remove');
     Route::get('/panier/vider', [CartController::class, 'clear'])->name('cart.clear');
+
+    // Coupons
+    Route::post('/panier/coupon/appliquer', [CouponController::class, 'apply'])->name('coupon.apply');
+    Route::get('/panier/coupon/retirer', [CouponController::class, 'remove'])->name('coupon.remove');
 });
 
 // ===== COMMANDES =====

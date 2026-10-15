@@ -8,15 +8,33 @@ use Illuminate\Http\Request;
 class CartController extends Controller
 {
     // Afficher le panier
-    public function index()
-    {
-        $cart = session()->get('cart', []);
-        $total = 0;
-        foreach ($cart as $item) {
-            $total += $item['price'] * $item['quantity'];
-        }
-        return view('cart.index', compact('cart', 'total'));
+public function index()
+{
+    $cart = session()->get('cart', []);
+    $subtotal = 0;
+    foreach ($cart as $item) {
+        $subtotal += $item['price'] * $item['quantity'];
     }
+
+    // Appliquer le coupon si présent
+    $coupon = session('coupon');
+    $discount = 0;
+    if ($coupon) {
+        // Recharger le coupon pour recalculer la réduction
+        $couponModel = \App\Models\Coupon::find($coupon['id']);
+        if ($couponModel && $couponModel->isValid()) {
+            $discount = $couponModel->calculateDiscount($subtotal);
+        } else {
+            // Coupon devenu invalide → retirer
+            session()->forget('coupon');
+            $coupon = null;
+        }
+    }
+
+    $total = $subtotal - $discount;
+
+    return view('cart.index', compact('cart', 'subtotal', 'coupon', 'discount', 'total'));
+}
 
     // Ajouter un produit au panier
     public function add($id)
