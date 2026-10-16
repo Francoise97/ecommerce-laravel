@@ -57,7 +57,9 @@ Route::middleware(['auth'])->group(function () {
     // Coupons
     Route::post('/panier/coupon/appliquer', [CouponController::class, 'apply'])->name('coupon.apply');
     Route::get('/panier/coupon/retirer', [CouponController::class, 'remove'])->name('coupon.remove');
-
+    // Profil client
+    Route::get('/mon-profil', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
+    Route::post('/mon-profil', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
     // Commandes
     Route::get('/commande', [OrderController::class, 'checkout'])->name('orders.checkout');
     Route::post('/commande', [OrderController::class, 'store'])->name('orders.store');

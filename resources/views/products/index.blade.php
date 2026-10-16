@@ -88,13 +88,10 @@
        <header>
     <h1>🍽️ Mon Restaurant</h1>
     <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-        @auth
-            {{-- Groupe utilisateur --}}
-            <a href="{{ route('orders.my') }}" style="color: #fff; font-size: 14px; text-decoration: none; display: flex; align-items: center; gap: 5px;">
-                👤 {{ Auth::user()->name }}
-            </a>
-            <a href="{{ route('orders.my') }}" style="background: rgba(255,255,255,0.15); color: white; padding: 8px 15px; border-radius: 30px; text-decoration: none; font-size: 13px;">
-                📦 Mes commandes
+      @auth
+    <a href="{{ route('profile.show') }}" style="color: #fff; font-size: 14px; text-decoration: none;">👤 {{ Auth::user()->name }}</a>
+    <a href="{{ route('profile.show') }}" style="background: rgba(255,255,255,0.15); color: white; padding: 8px 15px; border-radius: 30px; text-decoration: none; font-size: 13px;">👤 Mon profil</a>
+    <a href="{{ route('orders.my') }}" style="background: rgba(255,255,255,0.15); color: white; padding: 8px 15px; border-radius: 30px; text-decoration: none; font-size: 13px;">📦 Mes commandes</a>
             </a>
             @if (Auth::user()->is_admin)
                 <a href="{{ route('admin.dashboard') }}" style="background: #ffc107; color: #333; padding: 8px 15px; border-radius: 30px; text-decoration: none; font-weight: 700; font-size: 13px;">
