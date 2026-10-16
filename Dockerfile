@@ -1,7 +1,8 @@
 FROM php:8.4-cli-alpine
 
-RUN apk add --no-cache git curl libpng-dev libxml2-dev zip unzip sqlite-dev
-RUN docker-php-ext-install pdo pdo_sqlite mbstring xml ctype fileinfo bcmath
+RUN apk add --no-cache git curl zip unzip sqlite-dev oniguruma-dev libxml2-dev
+
+RUN docker-php-ext-install pdo pdo_sqlite mbstring xml bcmath
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
