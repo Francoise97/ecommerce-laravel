@@ -58,6 +58,14 @@
             @endif
             <p style="padding: 8px 0;"><strong>Adresse :</strong><br>{{ $order->customer_address }}</p>
         </div>
+        <div class="card">
+    <h3 style="margin-bottom: 15px;">📄 Facture</h3>
+    <a href="{{ route('orders.invoice', $order->id) }}"
+       class="btn btn-primary"
+       style="width: 100%; text-align: center; display: block;">
+        📄 Télécharger la facture PDF
+    </a>
+</div>
 
         <div class="card">
             <h3 style="margin-bottom: 15px;">📌 Statut</h3>

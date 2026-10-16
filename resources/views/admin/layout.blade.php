@@ -1,75 +1,155 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
-    <title>Admin - Mon Restaurant</title>
+    <title>Admin -MAGLOIRE</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f5f5f5;
+        }
 
         /* === SIDEBAR === */
         .sidebar {
-            position: fixed; left: 0; top: 0; bottom: 0; width: 240px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 240px;
             background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
-            color: white; padding: 25px 0; overflow-y: auto;
+            color: white;
+            padding: 25px 0;
+            overflow-y: auto;
         }
+
         .sidebar h2 {
-            padding: 0 25px 20px; font-size: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px;
+            padding: 0 25px 20px;
+            font-size: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
         }
+
         .sidebar nav a {
-            display: flex; align-items: center; gap: 12px;
-            padding: 14px 25px; color: rgba(255,255,255,0.7);
-            text-decoration: none; font-size: 14px; font-weight: 500;
-            transition: all 0.2s; border-left: 3px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 25px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
         }
-        .sidebar nav a:hover, .sidebar nav a.active {
-            background: rgba(255,255,255,0.05); color: white;
+
+        .sidebar nav a:hover,
+        .sidebar nav a.active {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
             border-left-color: #e94560;
         }
 
         /* === CONTENU PRINCIPAL === */
-        .main { margin-left: 240px; padding: 30px; }
+        .main {
+            margin-left: 240px;
+            padding: 30px;
+        }
 
         .topbar {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 30px; padding-bottom: 20px;
-            border-bottom: 1px solid #ddd; gap: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            gap: 20px;
         }
-        .topbar h1 { color: #1a1a2e; font-size: 24px; }
+
+        .topbar h1 {
+            color: #1a1a2e;
+            font-size: 24px;
+        }
+
         .topbar .user-info {
-            display: flex; align-items: center; gap: 15px;
-            font-size: 14px; color: #555;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 14px;
+            color: #555;
         }
 
         /* === ALERTES === */
         .alert {
-            background: #d4edda; color: #155724;
-            padding: 12px 20px; border-radius: 8px;
+            background: #d4edda;
+            color: #155724;
+            padding: 12px 20px;
+            border-radius: 8px;
             margin-bottom: 20px;
         }
 
         /* === BOUTONS === */
         .btn {
-            display: inline-block; padding: 10px 20px; border-radius: 8px;
-            text-decoration: none; font-size: 14px; font-weight: 600;
-            cursor: pointer; border: none; transition: all 0.2s;
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
         }
-        .btn-primary { background: #e94560; color: white; }
-        .btn-primary:hover { background: #c73650; }
-        .btn-secondary { background: #ddd; color: #333; }
-        .btn-secondary:hover { background: #bbb; }
-        .btn-danger { background: #dc3545; color: white; }
-        .btn-danger:hover { background: #b02a37; }
-        .btn-sm { padding: 6px 12px; font-size: 12px; }
+
+        .btn-primary {
+            background: #e94560;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #c73650;
+        }
+
+        .btn-secondary {
+            background: #ddd;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #bbb;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #b02a37;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
 
         /* === CARTES === */
         .card {
-            background: white; border-radius: 12px; padding: 25px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 20px;
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
         }
     </style>
 </head>
+
 <body>
     <aside class="sidebar">
         <h2>🍽️ Admin Resto</h2>
@@ -84,9 +164,9 @@
                 📦 Commandes
                 @php $pendingCount = \App\Models\Order::where('status', 'En attente')->count(); @endphp
                 @if ($pendingCount > 0)
-                    <span style="background: #e94560; color: white; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-left: auto;">
-                        {{ $pendingCount }}
-                    </span>
+                <span style="background: #e94560; color: white; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-left: auto;">
+                    {{ $pendingCount }}
+                </span>
                 @endif
             </a>
             <a href="{{ route('admin.coupons') }}" class="{{ request()->routeIs('admin.coupons*') ? 'active' : '' }}">
@@ -113,10 +193,11 @@
         </div>
 
         @if (session('success'))
-            <div class="alert">{{ session('success') }}</div>
+        <div class="alert">{{ session('success') }}</div>
         @endif
 
         @yield('content')
     </main>
 </body>
+
 </html>

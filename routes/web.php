@@ -75,6 +75,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/commande', [OrderController::class, 'store'])->name('orders.store');
     Route::get('/commande/confirmation/{id}', [OrderController::class, 'confirmation'])->name('orders.confirmation');
     Route::get('/mes-commandes', [OrderController::class, 'myOrders'])->name('orders.my');
+        // Facture PDF
+    Route::get('/commande/{id}/facture', [\App\Http\Controllers\InvoiceController::class, 'download'])->name('orders.invoice');
 });
 
 // ===== ADMIN (protégé par admin) =====

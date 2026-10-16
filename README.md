@@ -1,4 +1,4 @@
-# 🍽️ Mon Restaurant - Site E-commerce Laravel
+# 🍽️MAGLOIRE - Site E-commerce Laravel
 
 Un site e-commerce complet pour un restaurant, développé avec **Laravel 13** et une base de données **SQLite**. Ce projet a été réalisé dans le cadre d'un projet d'études.
 

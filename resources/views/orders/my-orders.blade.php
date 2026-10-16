@@ -127,6 +127,12 @@
     <span class="total-label">Total payé</span>
     <span class="total-amount">{{ number_format($order->total, 0, ',', ' ') }} FCFA</span>
 </div>
+<div style="text-align: right; margin-top: 15px;">
+    <a href="{{ route('orders.invoice', $order->id) }}"
+       style="display: inline-block; padding: 10px 20px; background: #1a1a2e; color: white; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 600;">
+        📄 Télécharger la facture PDF
+    </a>
+</div>
             </div>
         @empty
             <div class="empty">

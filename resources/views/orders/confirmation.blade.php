@@ -83,7 +83,7 @@
     <span>{{ number_format($order->total, 0, ',', ' ') }} FCFA</span>
 </div>
             </div>
-
+            <a href="{{ route('orders.invoice', $order->id) }}" class="btn" style="background: #1a1a2e; margin-right: 10px;">📄 Télécharger la facture PDF</a>
             <a href="/" class="btn">Retour au menu</a>
         </div>
     </div>
