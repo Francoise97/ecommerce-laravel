@@ -9,6 +9,11 @@ class ProductSeeder extends Seeder
 {
     public function run(): void
     {
+        // Ne pas recréer les produits s'ils existent déjà
+        if (Product::count() > 0) {
+            return;
+        }
+
         $products = [
             // ENTRÉES
             ['name' => 'Salade César', 'description' => 'Salade croquante avec poulet grillé, croûtons, parmesan et sauce César maison.', 'price' => 3500, 'old_price' => null, 'stock' => 20, 'category' => 'Entrée', 'image' => 'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=400'],
