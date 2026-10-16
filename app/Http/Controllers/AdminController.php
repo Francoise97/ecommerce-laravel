@@ -53,11 +53,25 @@ class AdminController extends Controller
     // ==================== PRODUITS ====================
 
     // Liste des produits
-    public function products()
-    {
-        $products = Product::latest()->get();
-        return view('admin.products.index', compact('products'));
+   public function products(Request $request)
+{
+    $search = $request->query('search');
+    $category = $request->query('category');
+
+    $query = Product::query();
+
+    if ($search) {
+        $query->where('name', 'LIKE', '%' . $search . '%');
     }
+
+    if ($category) {
+        $query->where('category', $category);
+    }
+
+    $products = $query->latest()->get();
+
+    return view('admin.products.index', compact('products', 'search', 'category'));
+}
 
     // Formulaire de création
     public function createProduct()

@@ -3,10 +3,36 @@
 @section('title', 'Gestion des produits')
 
 @section('content')
-<div style="margin-bottom: 20px; text-align: right;">
+
+{{-- Barre de recherche + bouton ajouter --}}
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap;">
+    <form action="{{ route('admin.products') }}" method="GET" style="display: flex; gap: 10px; flex: 1; max-width: 500px;">
+        <input type="text" name="search" placeholder="🔍 Rechercher un produit..."
+               value="{{ $search ?? '' }}"
+               style="flex: 1; padding: 10px 18px; border: 2px solid #eee; border-radius: 30px; font-size: 14px; outline: none;">
+        <select name="category" style="padding: 10px 15px; border: 2px solid #eee; border-radius: 30px; font-size: 14px; outline: none; background: white;">
+            <option value="">Toutes catégories</option>
+            <option value="Entrée" {{ ($category ?? '') == 'Entrée' ? 'selected' : '' }}>Entrées</option>
+            <option value="Plat" {{ ($category ?? '') == 'Plat' ? 'selected' : '' }}>Plats</option>
+            <option value="Dessert" {{ ($category ?? '') == 'Dessert' ? 'selected' : '' }}>Desserts</option>
+            <option value="Boisson" {{ ($category ?? '') == 'Boisson' ? 'selected' : '' }}>Boissons</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+        @if ($search || $category)
+            <a href="{{ route('admin.products') }}" class="btn btn-secondary">✕</a>
+        @endif
+    </form>
     <a href="{{ route('admin.products.create') }}" class="btn btn-primary">+ Ajouter un produit</a>
 </div>
 
+{{-- Info résultats --}}
+@if ($search || $category)
+    <div style="background: #e7f3ff; color: #004085; padding: 12px 20px; border-radius: 8px; margin-bottom: 20px; font-size: 14px;">
+        🔍 <strong>{{ $products->count() }}</strong> résultat(s) trouvé(s)
+        @if ($search) pour "<strong>{{ $search }}</strong>" @endif
+        @if ($category) dans la catégorie "<strong>{{ $category }}</strong>" @endif
+    </div>
+@endif
 <div class="card" style="padding: 0; overflow-x: auto;">
     <table style="width: 100%; border-collapse: collapse;">
         <thead>
