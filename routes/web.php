@@ -25,7 +25,17 @@ Route::get('/', function (Request $request) {
         $query->where('name', 'LIKE', '%' . $search . '%');
     }
 
-    $products = $query->get();
+    // Trier par catégorie (Entrée → Plat → Dessert → Boisson) puis par nom
+    $order = [
+        'Entrée' => 1,
+        'Plat' => 2,
+        'Dessert' => 3,
+        'Boisson' => 4,
+    ];
+
+    $products = $query->get()->sortBy(function ($product) use ($order) {
+        return ($order[$product->category] ?? 99) . '_' . $product->name;
+    })->values();
 
     return view('products.index', [
         'products' => $products,
