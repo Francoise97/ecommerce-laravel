@@ -25,10 +25,20 @@
             @forelse ($coupons as $coupon)
                 <tr style="border-bottom: 1px solid #eee;">
                     <td style="padding: 12px;">
-                        <span style="background: #1a1a2e; color: white; padding: 6px 12px; border-radius: 8px; font-weight: 700; letter-spacing: 1px; font-size: 13px;">
-                            {{ $coupon->code }}
-                        </span>
-                    </td>
+    <div style="display: flex; align-items: center; gap: 6px;">
+        <span style="background: #1a1a2e; color: white; padding: 6px 12px; border-radius: 8px; font-weight: 700; letter-spacing: 1px; font-size: 13px;">
+            {{ $coupon->code }}
+        </span>
+        <button type="button"
+                onclick="copyCode('{{ $coupon->code }}', this)"
+                title="Copier le code"
+                style="background: #f0f0f0; border: none; border-radius: 6px; padding: 6px 8px; cursor: pointer; font-size: 13px; transition: background 0.2s;"
+                onmouseover="this.style.background='#e0e0e0'"
+                onmouseout="this.style.background='#f0f0f0'">
+            📋
+        </button>
+    </div>
+</td>
                     <td style="padding: 12px; color: #666; font-size: 13px;">
                         {{ $coupon->description ?? '—' }}
                     </td>
@@ -79,4 +89,27 @@
         </tbody>
     </table>
 </div>
+<script>
+function copyCode(code, btn) {
+    // Copier dans le presse-papiers
+    navigator.clipboard.writeText(code).then(() => {
+        // Feedback visuel
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '✅';
+        btn.style.background = '#d4edda';
+        btn.style.color = '#155724';
+
+        // Rétablir après 1.5 secondes
+        setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.style.background = '#f0f0f0';
+            btn.style.color = '';
+        }, 1500);
+    }).catch(err => {
+        alert('Impossible de copier. Code : ' + code);
+    });
+}
+</script>
+
+
 @endsection
