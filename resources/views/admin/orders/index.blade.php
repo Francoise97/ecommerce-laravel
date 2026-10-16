@@ -3,30 +3,29 @@
 @section('title', 'Gestion des commandes')
 
 @section('content')
-{{-- Filtres par statut --}}
-<div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+<div style="margin-bottom: 20px; font-size: 0;">
     <a href="{{ route('admin.orders') }}"
-       style="padding: 10px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 600; {{ !$status ? 'background: #1a1a2e; color: white;' : 'background: white; color: #1a1a2e; box-shadow: 0 2px 8px rgba(0,0,0,0.06);' }}">
+       style="display: inline-block; margin: 0 8px 10px 0; padding: 10px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 600; {{ !$status ? 'background: #1a1a2e; color: white;' : 'background: white; color: #1a1a2e; box-shadow: 0 2px 8px rgba(0,0,0,0.06);' }}">
         Toutes ({{ $counts['all'] }})
     </a>
     <a href="{{ route('admin.orders', ['status' => 'En attente']) }}"
-       style="padding: 10px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 600; {{ $status === 'En attente' ? 'background: #ffc107; color: #333;' : 'background: white; color: #856404; box-shadow: 0 2px 8px rgba(0,0,0,0.06);' }}">
+       style="display: inline-block; margin: 0 8px 10px 0; padding: 10px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 600; {{ $status === 'En attente' ? 'background: #ffc107; color: #333;' : 'background: white; color: #856404; box-shadow: 0 2px 8px rgba(0,0,0,0.06);' }}">
         ⏳ En attente ({{ $counts['En attente'] }})
     </a>
     <a href="{{ route('admin.orders', ['status' => 'En préparation']) }}"
-       style="padding: 10px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 600; {{ $status === 'En préparation' ? 'background: #17a2b8; color: white;' : 'background: white; color: #004085; box-shadow: 0 2px 8px rgba(0,0,0,0.06);' }}">
+       style="display: inline-block; margin: 0 8px 10px 0; padding: 10px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 600; {{ $status === 'En préparation' ? 'background: #17a2b8; color: white;' : 'background: white; color: #004085; box-shadow: 0 2px 8px rgba(0,0,0,0.06);' }}">
         👨‍🍳 En préparation ({{ $counts['En préparation'] }})
     </a>
     <a href="{{ route('admin.orders', ['status' => 'En livraison']) }}"
-       style="padding: 10px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 600; {{ $status === 'En livraison' ? 'background: #007bff; color: white;' : 'background: white; color: #004085; box-shadow: 0 2px 8px rgba(0,0,0,0.06);' }}">
+       style="display: inline-block; margin: 0 8px 10px 0; padding: 10px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 600; {{ $status === 'En livraison' ? 'background: #007bff; color: white;' : 'background: white; color: #004085; box-shadow: 0 2px 8px rgba(0,0,0,0.06);' }}">
         🚚 En livraison ({{ $counts['En livraison'] }})
     </a>
     <a href="{{ route('admin.orders', ['status' => 'Livrée']) }}"
-       style="padding: 10px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 600; {{ $status === 'Livrée' ? 'background: #28a745; color: white;' : 'background: white; color: #155724; box-shadow: 0 2px 8px rgba(0,0,0,0.06);' }}">
+       style="display: inline-block; margin: 0 8px 10px 0; padding: 10px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 600; {{ $status === 'Livrée' ? 'background: #28a745; color: white;' : 'background: white; color: #155724; box-shadow: 0 2px 8px rgba(0,0,0,0.06);' }}">
         ✅ Livrée ({{ $counts['Livrée'] }})
     </a>
     <a href="{{ route('admin.orders', ['status' => 'Annulée']) }}"
-       style="padding: 10px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 600; {{ $status === 'Annulée' ? 'background: #dc3545; color: white;' : 'background: white; color: #721c24; box-shadow: 0 2px 8px rgba(0,0,0,0.06);' }}">
+       style="display: inline-block; margin: 0 8px 10px 0; padding: 10px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 600; {{ $status === 'Annulée' ? 'background: #dc3545; color: white;' : 'background: white; color: #721c24; box-shadow: 0 2px 8px rgba(0,0,0,0.06);' }}">
         ❌ Annulée ({{ $counts['Annulée'] }})
     </a>
 </div>
@@ -58,6 +57,8 @@
                             <span style="background: #fff3cd; color: #856404; padding: 4px 10px; border-radius: 12px; font-size: 12px;">⏳ {{ $order->status }}</span>
                         @elseif ($order->status == 'Livrée')
                             <span style="background: #d4edda; color: #155724; padding: 4px 10px; border-radius: 12px; font-size: 12px;">✅ {{ $order->status }}</span>
+                        @elseif ($order->status == 'Annulée')
+                            <span style="background: #f8d7da; color: #721c24; padding: 4px 10px; border-radius: 12px; font-size: 12px;">❌ {{ $order->status }}</span>
                         @else
                             <span style="background: #cce5ff; color: #004085; padding: 4px 10px; border-radius: 12px; font-size: 12px;">{{ $order->status }}</span>
                         @endif
@@ -67,14 +68,14 @@
                         <a href="{{ route('admin.orders.show', $order->id) }}" class="btn btn-secondary btn-sm">👁️ Voir</a>
                     </td>
                 </tr>
-           @empty
-    <tr>
-        <td colspan="8" style="padding: 40px; text-align: center; color: #888;">
-            <div style="font-size: 40px; margin-bottom: 10px;">📭</div>
-            Aucune commande{{ $status ? ' avec le statut "' . $status . '"' : '' }}.
-        </td>
-    </tr>
-@endforelse
+            @empty
+                <tr>
+                    <td colspan="8" style="padding: 40px; text-align: center; color: #888;">
+                        <div style="font-size: 40px; margin-bottom: 10px;">📭</div>
+                        Aucune commande{{ $status ? ' avec le statut "' . $status . '"' : '' }}.
+                    </td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
 </div>
