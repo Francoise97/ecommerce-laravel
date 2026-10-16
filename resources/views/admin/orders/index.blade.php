@@ -3,6 +3,34 @@
 @section('title', 'Gestion des commandes')
 
 @section('content')
+{{-- Filtres par statut --}}
+<div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+    <a href="{{ route('admin.orders') }}"
+       style="padding: 10px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 600; {{ !$status ? 'background: #1a1a2e; color: white;' : 'background: white; color: #1a1a2e; box-shadow: 0 2px 8px rgba(0,0,0,0.06);' }}">
+        Toutes ({{ $counts['all'] }})
+    </a>
+    <a href="{{ route('admin.orders', ['status' => 'En attente']) }}"
+       style="padding: 10px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 600; {{ $status === 'En attente' ? 'background: #ffc107; color: #333;' : 'background: white; color: #856404; box-shadow: 0 2px 8px rgba(0,0,0,0.06);' }}">
+        ⏳ En attente ({{ $counts['En attente'] }})
+    </a>
+    <a href="{{ route('admin.orders', ['status' => 'En préparation']) }}"
+       style="padding: 10px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 600; {{ $status === 'En préparation' ? 'background: #17a2b8; color: white;' : 'background: white; color: #004085; box-shadow: 0 2px 8px rgba(0,0,0,0.06);' }}">
+        👨‍🍳 En préparation ({{ $counts['En préparation'] }})
+    </a>
+    <a href="{{ route('admin.orders', ['status' => 'En livraison']) }}"
+       style="padding: 10px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 600; {{ $status === 'En livraison' ? 'background: #007bff; color: white;' : 'background: white; color: #004085; box-shadow: 0 2px 8px rgba(0,0,0,0.06);' }}">
+        🚚 En livraison ({{ $counts['En livraison'] }})
+    </a>
+    <a href="{{ route('admin.orders', ['status' => 'Livrée']) }}"
+       style="padding: 10px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 600; {{ $status === 'Livrée' ? 'background: #28a745; color: white;' : 'background: white; color: #155724; box-shadow: 0 2px 8px rgba(0,0,0,0.06);' }}">
+        ✅ Livrée ({{ $counts['Livrée'] }})
+    </a>
+    <a href="{{ route('admin.orders', ['status' => 'Annulée']) }}"
+       style="padding: 10px 20px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 600; {{ $status === 'Annulée' ? 'background: #dc3545; color: white;' : 'background: white; color: #721c24; box-shadow: 0 2px 8px rgba(0,0,0,0.06);' }}">
+        ❌ Annulée ({{ $counts['Annulée'] }})
+    </a>
+</div>
+
 <div class="card" style="padding: 0; overflow-x: auto;">
     <table style="width: 100%; border-collapse: collapse;">
         <thead>
@@ -39,9 +67,14 @@
                         <a href="{{ route('admin.orders.show', $order->id) }}" class="btn btn-secondary btn-sm">👁️ Voir</a>
                     </td>
                 </tr>
-            @empty
-                <tr><td colspan="8" style="padding: 30px; text-align: center; color: #888;">Aucune commande.</td></tr>
-            @endforelse
+           @empty
+    <tr>
+        <td colspan="8" style="padding: 40px; text-align: center; color: #888;">
+            <div style="font-size: 40px; margin-bottom: 10px;">📭</div>
+            Aucune commande{{ $status ? ' avec le statut "' . $status . '"' : '' }}.
+        </td>
+    </tr>
+@endforelse
         </tbody>
     </table>
 </div>

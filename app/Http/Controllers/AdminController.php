@@ -29,11 +29,30 @@ class AdminController extends Controller
 
     // ==================== COMMANDES ====================
 
-    public function orders()
-    {
-        $orders = Order::with('items')->latest()->get();
-        return view('admin.orders.index', compact('orders'));
+    public function orders(Request $request)
+{
+    $status = $request->query('status');
+
+    $query = Order::with('items');
+
+    if ($status) {
+        $query->where('status', $status);
     }
+
+    $orders = $query->latest()->get();
+
+    // Compter par statut pour les badges
+    $counts = [
+        'all' => Order::count(),
+        'En attente' => Order::where('status', 'En attente')->count(),
+        'En préparation' => Order::where('status', 'En préparation')->count(),
+        'En livraison' => Order::where('status', 'En livraison')->count(),
+        'Livrée' => Order::where('status', 'Livrée')->count(),
+        'Annulée' => Order::where('status', 'Annulée')->count(),
+    ];
+
+    return view('admin.orders.index', compact('orders', 'status', 'counts'));
+}
 
     public function showOrder($id)
     {
