@@ -27,61 +27,86 @@ class OrderController extends Controller
     }
 
     // Enregistrer la commande
-    public function store(Request $request)
-    {
-        $request->validate([
-            'customer_name' => 'required|string|max:255',
-            'customer_phone' => 'required|string|max:20',
-            'customer_email' => 'nullable|email',
-            'customer_address' => 'required|string',
+
+public function store(Request $request)
+{
+    $request->validate([
+        'customer_name' => 'required|string|max:255',
+        'customer_phone' => 'required|string|max:20',
+        'customer_email' => 'nullable|email',
+        'customer_address' => 'required|string',
+    ]);
+
+    $cart = session()->get('cart', []);
+
+    if (empty($cart)) {
+        return redirect('/')->with('success', 'Votre panier est vide.');
+    }
+
+    // Calculer le sous-total
+    $subtotal = 0;
+    foreach ($cart as $item) {
+        $subtotal += $item['price'] * $item['quantity'];
+    }
+
+    // Appliquer le coupon si présent
+    $discount = 0;
+    $couponCode = null;
+    $couponModel = null;
+
+    $couponSession = session('coupon');
+    if ($couponSession) {
+        $couponModel = \App\Models\Coupon::find($couponSession['id']);
+        if ($couponModel && $couponModel->isValid()) {
+            $discount = $couponModel->calculateDiscount($subtotal);
+            $couponCode = $couponModel->code;
+        }
+    }
+
+    $total = $subtotal - $discount;
+
+    // Créer la commande
+    $order = Order::create([
+        'user_id' => \Illuminate\Support\Facades\Auth::id(),
+        'customer_name' => $request->customer_name,
+        'customer_phone' => $request->customer_phone,
+        'customer_email' => $request->customer_email,
+        'customer_address' => $request->customer_address,
+        'total' => $total,
+        'discount' => $discount,
+        'coupon_code' => $couponCode,
+        'status' => 'En attente',
+    ]);
+
+    // Créer les articles
+    foreach ($cart as $productId => $item) {
+        OrderItem::create([
+            'order_id' => $order->id,
+            'product_id' => $productId,
+            'product_name' => $item['name'],
+            'price' => $item['price'],
+            'quantity' => $item['quantity'],
         ]);
 
-        $cart = session()->get('cart', []);
-
-        if (empty($cart)) {
-            return redirect('/')->with('success', 'Votre panier est vide.');
+        // Décrémenter le stock
+        $product = Product::find($productId);
+        if ($product) {
+            $product->stock -= $item['quantity'];
+            $product->save();
         }
-
-        $total = 0;
-        foreach ($cart as $item) {
-            $total += $item['price'] * $item['quantity'];
-        }
-
-        // Créer la commande
-       $order = Order::create([
-    'user_id' => \Illuminate\Support\Facades\Auth::id(),
-    'customer_name' => $request->customer_name,
-    'customer_phone' => $request->customer_phone,
-    'customer_email' => $request->customer_email,
-    'customer_address' => $request->customer_address,
-    'total' => $total,
-    'status' => 'En attente',
-]);
-
-
-        // Créer les articles
-        foreach ($cart as $productId => $item) {
-            OrderItem::create([
-                'order_id' => $order->id,
-                'product_id' => $productId,
-                'product_name' => $item['name'],
-                'price' => $item['price'],
-                'quantity' => $item['quantity'],
-            ]);
-
-            // Décrémenter le stock
-            $product = Product::find($productId);
-            if ($product) {
-                $product->stock -= $item['quantity'];
-                $product->save();
-            }
-        }
-
-        // Vider le panier
-        session()->forget('cart');
-
-        return redirect()->route('orders.confirmation', $order->id);
     }
+
+    // Incrémenter l'utilisation du coupon
+    if ($couponModel) {
+        $couponModel->incrementUsage();
+    }
+
+    // Vider le panier ET le coupon
+    session()->forget('cart');
+    session()->forget('coupon');
+
+    return redirect()->route('orders.confirmation', $order->id);
+}
 
     // Historique des commandes du client connecté
 public function myOrders()

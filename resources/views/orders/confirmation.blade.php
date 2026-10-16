@@ -72,10 +72,16 @@
                         </div>
                     @endforeach
                 </div>
-                <div class="total-line">
-                    <span>Total payé</span>
-                    <span>{{ number_format($order->total, 0, ',', ' ') }} FCFA</span>
-                </div>
+               @if ($order->discount > 0)
+    <div class="item" style="color: #28a745; font-weight: 600;">
+        <span>🎟️ Réduction ({{ $order->coupon_code }})</span>
+        <span>-{{ number_format($order->discount, 0, ',', ' ') }} FCFA</span>
+    </div>
+@endif
+<div class="total-line">
+    <span>Total payé</span>
+    <span>{{ number_format($order->total, 0, ',', ' ') }} FCFA</span>
+</div>
             </div>
 
             <a href="/" class="btn">Retour au menu</a>

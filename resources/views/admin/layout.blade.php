@@ -67,6 +67,7 @@
             <a href="{{ route('admin.products') }}" class="{{ request()->routeIs('admin.products*') ? 'active' : '' }}">🍕 Produits</a>
             <a href="{{ route('admin.orders') }}" class="{{ request()->routeIs('admin.orders*') ? 'active' : '' }}">📦 Commandes</a>
             <a href="/" style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">🏠 Voir le site</a>
+            <a href="{{ route('admin.coupons') }}" class="{{ request()->routeIs('admin.coupons*') ? 'active' : '' }}">🎟️ Codes promo</a>
         </nav>
     </aside>
 

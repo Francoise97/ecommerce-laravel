@@ -16,6 +16,8 @@ class Order extends Model
         'customer_email',
         'customer_address',
         'total',
+        'discount',
+        'coupon_code',
         'status',
     ];
 
@@ -24,9 +26,8 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
-    // Relation : une commande appartient à un utilisateur (optionnel)
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-}  
+}

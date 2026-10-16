@@ -117,10 +117,16 @@
                     @endforeach
                 </div>
 
-                <div class="order-footer">
-                    <span class="total-label">Total payé</span>
-                    <span class="total-amount">{{ number_format($order->total, 0, ',', ' ') }} FCFA</span>
-                </div>
+                @if ($order->discount > 0)
+    <div class="item-row" style="color: #28a745; font-weight: 600;">
+        <span>🎟️ Réduction ({{ $order->coupon_code }})</span>
+        <span>-{{ number_format($order->discount, 0, ',', ' ') }} FCFA</span>
+    </div>
+@endif
+<div class="order-footer">
+    <span class="total-label">Total payé</span>
+    <span class="total-amount">{{ number_format($order->total, 0, ',', ' ') }} FCFA</span>
+</div>
             </div>
         @empty
             <div class="empty">

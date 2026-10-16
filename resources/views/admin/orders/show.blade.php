@@ -28,10 +28,22 @@
                 @endforeach
             </tbody>
             <tfoot>
-                <tr style="border-top: 2px solid #1a1a2e;">
-                    <td colspan="3" style="padding: 15px; text-align: right; font-weight: bold; font-size: 18px;">TOTAL</td>
-                    <td style="padding: 15px; text-align: right; font-weight: bold; font-size: 18px; color: #e94560;">{{ number_format($order->total, 0, ',', ' ') }} FCFA</td>
-                </tr>
+               <tfoot>
+    @if ($order->discount > 0)
+        <tr style="border-top: 1px solid #eee;">
+            <td colspan="3" style="padding: 12px; text-align: right; color: #28a745; font-weight: 600;">
+                🎟️ Réduction ({{ $order->coupon_code }})
+            </td>
+            <td style="padding: 12px; text-align: right; color: #28a745; font-weight: 600;">
+                -{{ number_format($order->discount, 0, ',', ' ') }} FCFA
+            </td>
+        </tr>
+    @endif
+    <tr style="border-top: 2px solid #1a1a2e;">
+        <td colspan="3" style="padding: 15px; text-align: right; font-weight: bold; font-size: 18px;">TOTAL</td>
+        <td style="padding: 15px; text-align: right; font-weight: bold; font-size: 18px; color: #e94560;">{{ number_format($order->total, 0, ',', ' ') }} FCFA</td>
+    </tr>
+</tfoot>
             </tfoot>
         </table>
     </div>
