@@ -31,7 +31,7 @@
             margin-bottom: 30px; padding-bottom: 20px;
             border-bottom: 1px solid #ddd;
         }
-        .topbar h1 { color: #1a1a2e; font-size: 26px; }
+        .topbar h1 { color: #1a1a2e; font-size: 22px; white-space: nowrap; }
         .topbar .user-info { display: flex; align-items: center; gap: 15px; font-size: 14px; color: #555; }
 
         .alert {
