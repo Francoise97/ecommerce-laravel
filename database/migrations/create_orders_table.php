@@ -10,11 +10,14 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
             $table->string('customer_name');
             $table->string('customer_phone');
             $table->string('customer_email')->nullable();
             $table->text('customer_address');
             $table->decimal('total', 10, 2);
+            $table->decimal('discount', 10, 2)->default(0);
+            $table->string('coupon_code')->nullable();
             $table->string('status')->default('En attente');
             $table->timestamps();
         });
