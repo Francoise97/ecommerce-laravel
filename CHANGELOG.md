@@ -7,3 +7,4 @@
 - [x] Mise en place du catalogue client avec filtres
 - [x] Ajout de la barre de recherche de produits
 - [x] Création de la page détail d'un produit
+- [x] Intégration de l'authentification client (Login/Register)
