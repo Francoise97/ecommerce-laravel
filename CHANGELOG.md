@@ -1,3 +1,4 @@
 # Journal des modifications (Changelog)
 
 - [x] Initialisation du projet Laravel et configuration de base
+- [x] Création de la structure de la base de données (Migrations)
