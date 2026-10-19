@@ -17,3 +17,4 @@
 - [x] Système de codes promo (Création et application)
 - [x] Intégration de la réduction dans le panier
 - [x] Ajout de l'historique des commandes pour le client
+- [x] Génération des factures PDF avec DomPDF
