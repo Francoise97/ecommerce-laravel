@@ -223,5 +223,12 @@
             </div>
         </div>
     </div>
+        <footer style="text-align: center; padding: 30px 20px; margin-top: 40px; border-top: 1px solid #e0e0e0; color: #777; font-size: 13px;">
+        <p style="margin-bottom: 5px;">&copy; {{ date('Y') }} <strong>MAGLOIRE</strong> - Tous droits réservés.</p>
+        <p style="font-size: 11px;">Fait avec cœur    <footer style="text-align: center; padding: 30px 20px; margin-top: 40px; border-top: 1px solid #e0e0e0; color: #777; font-size: 13px;">
+        <p style="margin-bottom: 5px;">&copy; {{ date('Y') }} <strong>MAGLOIRE</strong> - Tous droits réservés.</p>
+        <p style="font-size: 11px;">Fait avec coeur ❤️ pour la gastronomie.</p>
+    </footer> pour la gastronomie.</p>
+    </footer>
 </body>
 </html>
