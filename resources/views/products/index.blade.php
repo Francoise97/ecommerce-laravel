@@ -402,38 +402,34 @@
 <body>
     <div class="container">
         <header>
-            <h1><span class="material-symbols-outlined">restaurant</span> MAGLOIRE</h1>
+            <a href="/" style="display: flex; align-items: center; text-decoration: none;">
+                <div style="background: white; padding: 5px 15px; border-radius: 8px; display: flex; align-items: center;">
+                    <img src="{{ asset('images/logo.png') }}" alt="MAGLOIRE" style="height: 45px; width: auto;">
+                </div>
+            </a>
+
             <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
                 @auth
-                    <a href="{{ route('profile.show') }}"
-                        style="color: #fff; font-size: 14px; text-decoration: none; display: flex; align-items: center; gap: 5px;">
-                        <span class="material-symbols-outlined" style="color: #d35400;">person</span>
-                        {{ Auth::user()->name }}
+                    <a href="{{ route('profile.show') }}" style="color: #fff; font-size: 14px; text-decoration: none; display: flex; align-items: center; gap: 5px;">
+                        <span class="material-symbols-outlined" style="color: #d35400;">person</span> {{ Auth::user()->name }}
                     </a>
-                    <a href="{{ route('orders.my') }}"
-                        style="background: rgba(255,255,255,0.15); color: white; padding: 8px 15px; border-radius: 30px; text-decoration: none; font-size: 13px; display: flex; align-items: center; gap: 5px;">
-                        <span class="material-symbols-outlined" style="font-size: 16px; color: #d35400;">inventory_2</span>
-                        Mes commandes
+                    <a href="{{ route('orders.my') }}" style="background: rgba(255,255,255,0.15); color: white; padding: 8px 15px; border-radius: 30px; text-decoration: none; font-size: 13px; display: flex; align-items: center; gap: 5px;">
+                        <span class="material-symbols-outlined" style="font-size: 16px; color: #d35400;">inventory_2</span> Mes commandes
                     </a>
                     @if (Auth::user()->is_admin)
-                        <a href="{{ route('admin.dashboard') }}"
-                            style="background: #ffc107; color: #333; padding: 8px 15px; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 5px;">
+                        <a href="{{ route('admin.dashboard') }}" style="background: #ffc107; color: #333; padding: 8px 15px; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 5px;">
                             <span class="material-symbols-outlined" style="font-size: 16px;">settings</span> Admin
                         </a>
                     @endif
                     <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                         @csrf
-                        <button type="submit"
-                            style="background: transparent; color: white; border: 1px solid rgba(255,255,255,0.4); padding: 8px 15px; border-radius: 30px; cursor: pointer; font-size: 13px; display: flex; align-items: center; gap: 5px;">
-                            <span class="material-symbols-outlined" style="font-size: 16px; color: #d35400;">logout</span>
-                            Déconnexion
+                        <button type="submit" style="background: transparent; color: white; border: 1px solid rgba(255,255,255,0.4); padding: 8px 15px; border-radius: 30px; cursor: pointer; font-size: 13px; display: flex; align-items: center; gap: 5px;">
+                            <span class="material-symbols-outlined" style="font-size: 16px; color: #d35400;">logout</span> Déconnexion
                         </button>
                     </form>
                 @else
-                    <a href="{{ route('login') }}"
-                        style="background: rgba(255,255,255,0.15); color: white; padding: 8px 18px; border-radius: 30px; text-decoration: none; font-size: 13px;">Connexion</a>
-                    <a href="{{ route('register') }}"
-                        style="background: #d35400; color: white; padding: 8px 18px; border-radius: 30px; text-decoration: none; font-size: 13px;">Inscription</a>
+                    <a href="{{ route('login') }}" style="background: rgba(255,255,255,0.15); color: white; padding: 8px 18px; border-radius: 30px; text-decoration: none; font-size: 13px;">Connexion</a>
+                    <a href="{{ route('register') }}" style="background: #d35400; color: white; padding: 8px 18px; border-radius: 30px; text-decoration: none; font-size: 13px;">Inscription</a>
                 @endauth
                 <a href="{{ route('cart.index') }}" class="cart-btn">
                     <span class="material-symbols-outlined">shopping_cart</span> Panier
@@ -547,17 +543,9 @@
             </div>
         </div>
     </div>
-    <footer
-        style="text-align: center; padding: 30px 20px; margin-top: 40px; border-top: 1px solid #e0e0e0; color: #777; font-size: 13px;">
-        <p style="margin-bottom: 5px;">&copy; {{ date('Y') }} <strong>MAGLOIRE</strong> - Tous droits réservés.
-        </p>
-        <p style="font-size: 11px;">Fait avec cœur
-        <footer
-            style="text-align: center; padding: 30px 20px; margin-top: 40px; border-top: 1px solid #e0e0e0; color: #777; font-size: 13px;">
-            <p style="margin-bottom: 5px;">&copy; {{ date('Y') }} <strong>MAGLOIRE</strong> - Tous droits
-                réservés.</p>
-            <p style="font-size: 11px;">Fait avec coeur ❤️ pour la gastronomie.</p>
-        </footer> pour la gastronomie.</p>
+        <footer style="text-align: center; padding: 30px 20px; margin-top: 40px; border-top: 1px solid #e0e0e0; color: #777; font-size: 13px;">
+        <p style="margin-bottom: 5px;">&copy; {{ date('Y') }} <strong>MAGLOIRE</strong> - Tous droits réservés.</p>
+        <p style="font-size: 11px;">Fait avec coeur ❤️ pour la gastronomie.</p>
     </footer>
 </body>
 

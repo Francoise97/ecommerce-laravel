@@ -72,11 +72,11 @@
 </head>
 <body>
     <aside class="sidebar">
-        <h2><span class="material-symbols-outlined" style="font-size: 28px;">restaurant</span> MAGLOIRE</h2>
-        <nav>
-            <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                <span class="material-symbols-outlined">dashboard</span> Tableau de bord
-            </a>
+       <a href="{{ route('admin.dashboard') }}" style="display: block; padding: 0 25px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px;">
+    <div style="background: white; padding: 5px 10px; border-radius: 8px; display: flex; justify-content: center;">
+        <img src="{{ asset('images/logo.png') }}" alt="MAGLOIRE" style="height: 40px; width: auto;">
+    </div>
+        </a>
             <a href="{{ route('admin.products') }}" class="{{ request()->routeIs('admin.products*') ? 'active' : '' }}">
                 <span class="material-symbols-outlined">restaurant_menu</span> Produits
             </a>
