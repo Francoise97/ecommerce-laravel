@@ -16,6 +16,13 @@
                     {{ number_format($stats['total_revenue'], 0, ',', ' ') }} FCFA</div>
             </div>
         </div>
+        <div style="background: #fff3cd; color: #856404; padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+    <span class="material-symbols-outlined">waving_hand</span>
+    <div>
+        <strong>Bienvenue sur votre tableau de bord !</strong><br>
+        <span style="font-size: 13px;">Voici le résumé de l'activité de votre restaurant aujourd'hui.</span>
+    </div>
+    </div>
 
         {{-- Carte Commandes --}}
         <div class="card" style="border-left: 4px solid #28a745; display: flex; align-items: center; gap: 15px;">
