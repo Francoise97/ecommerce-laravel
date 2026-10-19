@@ -48,9 +48,11 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
+               
 
+
+        // APRÈS :
+        if (Auth::attempt($credentials, $request->has('remember'))) {
             // Redirection selon le rôle
             if (Auth::user()->is_admin) {
                 return redirect()->route('admin.dashboard')->with('success', 'Bienvenue Admin !');

@@ -10,16 +10,18 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Segoe UI', sans-serif; background: #fdfbf7; }
 
-        /* --- SIDEBAR DESKTOP --- */
+        /* --- SIDEBAR --- */
         .sidebar {
             position: fixed; left: 0; top: 0; bottom: 0; width: 240px;
             background: linear-gradient(180deg, #2c3e50 0%, #1a252f 100%);
             color: white; padding: 25px 0; overflow-y: auto;
         }
-        .sidebar h2 {
-            padding: 0 25px 20px; font-size: 22px;
-            border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px;
-            display: flex; align-items: center; gap: 10px;
+        .sidebar .logo-container {
+            padding: 0 25px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px;
+            display: flex; justify-content: center;
+        }
+        .sidebar .logo-container img {
+            height: 40px; width: auto; background: white; padding: 5px 10px; border-radius: 8px;
         }
         .sidebar nav a {
             display: flex; align-items: center; gap: 12px;
@@ -33,6 +35,7 @@
             border-left-color: #d35400;
         }
 
+        /* --- MAIN CONTENT --- */
         .main { margin-left: 240px; padding: 30px; }
         .topbar {
             display: flex; justify-content: space-between; align-items: center;
@@ -61,7 +64,6 @@
         /* --- RESPONSIVE MOBILE --- */
         @media (max-width: 768px) {
             .sidebar { position: relative; width: 100%; height: auto; padding: 15px 0; }
-            .sidebar h2 { padding: 0 15px 10px; font-size: 20px; }
             .sidebar nav a { padding: 10px 15px; }
             .main { margin-left: 0; padding: 15px; }
             .topbar { flex-direction: column; align-items: flex-start; gap: 10px; }
@@ -72,25 +74,32 @@
 </head>
 <body>
     <aside class="sidebar">
-       <a href="{{ route('admin.dashboard') }}" style="display: block; padding: 0 25px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px;">
-    <div style="background: white; padding: 5px 10px; border-radius: 8px; display: flex; justify-content: center;">
-        <img src="{{ asset('images/logo.png') }}" alt="MAGLOIRE" style="height: 40px; width: auto;">
-    </div>
+        {{-- LOGO --}}
+        <a href="{{ route('admin.dashboard') }}" style="text-decoration: none;">
+            <div class="logo-container">
+                <img src="{{ asset('images/logo.png') }}" alt="MAGLOIRE">
+            </div>
         </a>
+
+        {{-- MENU --}}
+        <nav>
+            <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                <span class="material-symbols-outlined">dashboard</span> Tableau de bord
+            </a>
             <a href="{{ route('admin.products') }}" class="{{ request()->routeIs('admin.products*') ? 'active' : '' }}">
                 <span class="material-symbols-outlined">restaurant_menu</span> Produits
             </a>
             <a href="{{ route('admin.orders') }}" class="{{ request()->routeIs('admin.orders*') ? 'active' : '' }}">
                 <span class="material-symbols-outlined">inventory_2</span> Commandes
-                            <a href="{{ route('admin.users') }}" class="{{ request()->routeIs('admin.users*') ? 'active' : '' }}">
-                <span class="material-symbols-outlined">group</span> Clients
-            </a>
                 @php $pendingCount = \App\Models\Order::where('status', 'En attente')->count(); @endphp
                 @if ($pendingCount > 0)
                     <span style="background: #d35400; color: white; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-left: auto;">
                         {{ $pendingCount }}
                     </span>
                 @endif
+            </a>
+            <a href="{{ route('admin.users') }}" class="{{ request()->routeIs('admin.users*') ? 'active' : '' }}">
+                <span class="material-symbols-outlined">group</span> Clients
             </a>
             <a href="{{ route('admin.coupons') }}" class="{{ request()->routeIs('admin.coupons*') ? 'active' : '' }}">
                 <span class="material-symbols-outlined">confirmation_number</span> Codes promo
