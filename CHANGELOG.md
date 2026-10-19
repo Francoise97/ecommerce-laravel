@@ -9,3 +9,4 @@
 - [x] Création de la page détail d'un produit
 - [x] Intégration de l'authentification client (Login/Register)
 - [x] Création du système de panier (Session)
+- [x] Développement du processus de commande (Checkout)
