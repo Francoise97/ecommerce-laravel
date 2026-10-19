@@ -16,3 +16,4 @@
 - [x] Gestion des commandes et changement de statut
 - [x] Système de codes promo (Création et application)
 - [x] Intégration de la réduction dans le panier
+- [x] Ajout de l'historique des commandes pour le client
