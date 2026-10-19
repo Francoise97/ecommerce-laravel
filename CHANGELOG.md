@@ -11,3 +11,4 @@
 - [x] Création du système de panier (Session)
 - [x] Développement du processus de commande (Checkout)
 - [x] Intégration de l'upload d'images pour les produits
+- [x] Création du tableau de bord administrateur
