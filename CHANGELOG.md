@@ -19,3 +19,4 @@
 - [x] Ajout de l'historique des commandes pour le client
 - [x] Génération des factures PDF avec DomPDF
 - [x] Refonte du design avec Material Symbols et mode Responsive
+- [x] Configuration finale pour le déploiement sur Render et Neon
