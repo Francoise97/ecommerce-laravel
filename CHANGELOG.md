@@ -14,3 +14,4 @@
 - [x] Création du tableau de bord administrateur
 - [x] Gestion CRUD des produits dans l'espace admin
 - [x] Gestion des commandes et changement de statut
+- [x] Système de codes promo (Création et application)
