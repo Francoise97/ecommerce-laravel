@@ -30,29 +30,29 @@ class AdminController extends Controller
     // ==================== COMMANDES ====================
 
     public function orders(Request $request)
-{
-    $status = $request->query('status');
+    {
+        $status = $request->query('status');
 
-    $query = Order::with('items');
+        $query = Order::with('items');
 
-    if ($status) {
-        $query->where('status', $status);
+        if ($status) {
+            $query->where('status', $status);
+        }
+
+        $orders = $query->latest()->get();
+
+        // Compter par statut pour les badges
+        $counts = [
+            'all' => Order::count(),
+            'En attente' => Order::where('status', 'En attente')->count(),
+            'En préparation' => Order::where('status', 'En préparation')->count(),
+            'En livraison' => Order::where('status', 'En livraison')->count(),
+            'Livrée' => Order::where('status', 'Livrée')->count(),
+            'Annulée' => Order::where('status', 'Annulée')->count(),
+        ];
+
+        return view('admin.orders.index', compact('orders', 'status', 'counts'));
     }
-
-    $orders = $query->latest()->get();
-
-    // Compter par statut pour les badges
-    $counts = [
-        'all' => Order::count(),
-        'En attente' => Order::where('status', 'En attente')->count(),
-        'En préparation' => Order::where('status', 'En préparation')->count(),
-        'En livraison' => Order::where('status', 'En livraison')->count(),
-        'Livrée' => Order::where('status', 'Livrée')->count(),
-        'Annulée' => Order::where('status', 'Annulée')->count(),
-    ];
-
-    return view('admin.orders.index', compact('orders', 'status', 'counts'));
-}
 
     public function showOrder($id)
     {
@@ -72,25 +72,25 @@ class AdminController extends Controller
     // ==================== PRODUITS ====================
 
     // Liste des produits
-   public function products(Request $request)
-{
-    $search = $request->query('search');
-    $category = $request->query('category');
+    public function products(Request $request)
+    {
+        $search = $request->query('search');
+        $category = $request->query('category');
 
-    $query = Product::query();
+        $query = Product::query();
 
-    if ($search) {
-        $query->where('name', 'LIKE', '%' . $search . '%');
+        if ($search) {
+            $query->where('name', 'LIKE', '%' . $search . '%');
+        }
+
+        if ($category) {
+            $query->where('category', $category);
+        }
+
+        $products = $query->latest()->get();
+
+        return view('admin.products.index', compact('products', 'search', 'category'));
     }
-
-    if ($category) {
-        $query->where('category', $category);
-    }
-
-    $products = $query->latest()->get();
-
-    return view('admin.products.index', compact('products', 'search', 'category'));
-}
 
     // Formulaire de création
     public function createProduct()
@@ -104,9 +104,9 @@ class AdminController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'price' => 'required|numeric|min:0',
-            'old_price' => 'nullable|numeric|min:0',
-            'stock' => 'required|integer|min:0',
+            'price' => 'required|numeric|min:100',
+            'old_price' => 'nullable|numeric|min:100',
+            'stock' => 'required|integer|min:100',
             'category' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
@@ -182,9 +182,9 @@ class AdminController extends Controller
     {
         // On récupère tous les utilisateurs qui ne sont PAS admin
         $users = \App\Models\User::where('is_admin', false)
-                    ->withCount('orders') // Compte le nombre de commandes par client
-                    ->latest()
-                    ->get();
+            ->withCount('orders') // Compte le nombre de commandes par client
+            ->latest()
+            ->get();
         return view('admin.users.index', compact('users'));
     }
 
@@ -195,5 +195,4 @@ class AdminController extends Controller
         $orders = \App\Models\Order::with('items')->where('user_id', $id)->latest()->get();
         return view('admin.users.orders', compact('user', 'orders'));
     }
-
 }
